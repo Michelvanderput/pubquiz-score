@@ -56,7 +56,8 @@ export function useQuiz(id: string, token: string, intervalMs = 3000) {
   async function zetScore(questionId: string, teamId: string, toegekend: boolean) {
     const huidig = data.value
     if (!huidig) return
-    const zonder = huidig.scores.filter(s => !(s.question_id === questionId && s.team_id === teamId))
+    const enkel = !huidig.quiz.instellingen.meerdereTeamsPerVraag
+    const zonder = huidig.scores.filter(s => !(s.question_id === questionId && (s.team_id === teamId || (toegekend && enkel))))
     huidig.scores = toegekend ? [...zonder, { question_id: questionId, team_id: teamId }] : zonder
     huidig.stand = berekenStand(huidig.teams, huidig.rondes, huidig.vragen, huidig.scores)
     try {

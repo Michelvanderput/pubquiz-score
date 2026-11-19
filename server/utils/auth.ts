@@ -8,6 +8,9 @@ export interface QuizRow {
   naam: string
   aantal_rondes: number
   quizcode: string | null
+  meerdere_teams_per_vraag?: boolean
+  toon_vragen?: boolean
+  tussenstand_na_ronde?: boolean
   admin_token: string
   view_token: string
 }

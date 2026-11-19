@@ -44,3 +44,13 @@ npm run build
 - `shared/utils/quiz.ts`: standberekening (afgerond versus live, gedeelde plekken) en teamgrootte-regels.
 - `server/api/quizzes/`: API-routes (token-gebaseerde toegang: `admin_token` en `view_token`).
 - `app/pages/beheer/[id].vue`: organisator. `app/pages/scorebord/[id].vue`: scorebord.
+
+## Opties
+
+De organisator zet deze per quiz aan of uit (bij het aanmaken of later onder het tabblad Opties):
+
+- **Meerdere teams per vraag** (standaard aan): alle teams met het goede antwoord krijgen het punt. Uit: één winnend team per vraag, een nieuw team vervangt het vorige.
+- **Vragen tonen op het scorebord** (standaard uit): het scorebord toont de vragen van de lopende ronde.
+- **Tussenstand na elke ronde** (standaard aan): na "Ronde afronden" opent eerst de stand.
+
+Draai je al een database? Voer dan [`supabase/migration_instellingen.sql`](./supabase/migration_instellingen.sql) uit.

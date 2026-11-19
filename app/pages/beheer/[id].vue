@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { MAX_TEAMGROOTTE, MIN_TEAMGROOTTE, formatPunten, isGeldigeTeamgrootte } from '#shared/utils/quiz'
-import type { Ronde, Vraag } from '#shared/types/quiz'
+import type { QuizInstellingen, Ronde, Vraag } from '#shared/types/quiz'
 
 const route = useRoute()
 const id = String(route.params.id)
@@ -9,11 +9,12 @@ const { data, fout, bezig, mutatie, zetScore } = useQuiz(id, token)
 
 useSeoMeta({ title: () => data.value ? `${data.value.quiz.naam} – beheer` : 'Beheer' })
 
-const tab = ref<'teams' | 'punten' | 'stand'>('teams')
+const tab = ref<'teams' | 'punten' | 'stand' | 'opties'>('teams')
 const tabs = [
   { key: 'teams', label: 'Teams', icon: 'i-lucide-users' },
   { key: 'punten', label: 'Punten', icon: 'i-lucide-check-circle' },
-  { key: 'stand', label: 'Stand', icon: 'i-lucide-trophy' }
+  { key: 'stand', label: 'Stand', icon: 'i-lucide-trophy' },
+  { key: 'opties', label: 'Opties', icon: 'i-lucide-settings' }
 ] as const
 
 // ── Links ───────────────────────────────────────────────────────────────
@@ -97,13 +98,18 @@ async function verwijderVraag(vraag: Vraag) {
   }
 }
 
+async function wijzigOpties(nieuw: QuizInstellingen) {
+  if (data.value) data.value.quiz.instellingen = nieuw
+  await mutatie('PATCH', '', { ...nieuw })
+}
+
 async function zetRondeStatus(r: Ronde, status: 'open' | 'afgerond') {
   await mutatie('PATCH', `/rounds/${r.id}`, { status })
   if (status === 'afgerond') {
     const volgende = data.value?.rondes.find(x => x.status === 'open')
     if (volgende) gekozenRondeId.value = volgende.id
-    // Eerst de tussenstand tonen; de volgende ronde staat klaar onder het tabblad Punten.
-    tab.value = 'stand'
+    // Optioneel eerst de tussenstand tonen; de volgende ronde staat klaar onder Punten.
+    if (data.value?.quiz.instellingen.tussenstandNaRonde) tab.value = 'stand'
   }
 }
 </script>
@@ -174,7 +180,7 @@ async function zetRondeStatus(r: Ronde, status: 'open' | 'afgerond') {
 
     <template v-if="data">
       <nav
-        class="sticky top-0 z-10 -mx-4 mt-4 grid grid-cols-3 gap-1 bg-[#14110d]/95 px-4 py-2 backdrop-blur"
+        class="sticky top-0 z-10 -mx-4 mt-4 grid grid-cols-4 gap-1 bg-[#14110d]/95 px-4 py-2 backdrop-blur"
         aria-label="Onderdelen"
       >
         <UButton
@@ -468,6 +474,17 @@ async function zetRondeStatus(r: Ronde, status: 'open' | 'afgerond') {
             </UButton>
           </form>
         </template>
+      </section>
+
+      <!-- OPTIES -->
+      <section
+        v-show="tab === 'opties'"
+        class="mt-4"
+      >
+        <QuizOpties
+          :model-value="data.quiz.instellingen"
+          @update:model-value="wijzigOpties"
+        />
       </section>
 
       <!-- STAND -->

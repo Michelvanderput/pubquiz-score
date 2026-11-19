@@ -15,6 +15,7 @@ export default defineEventHandler(async (event) => {
   const fout = [spelers, teams, rondes, vragen, scores].find(r => r.error)?.error
   if (fout) throw createError({ statusCode: 500, statusMessage: fout.message })
 
+  const instellingen = instellingenUitRij(quiz)
   const alleVragen = (vragen.data ?? []).map(v => ({ ...v, punten: Number(v.punten) }))
 
   return {
@@ -24,6 +25,7 @@ export default defineEventHandler(async (event) => {
       naam: quiz.naam,
       aantal_rondes: quiz.aantal_rondes,
       quizcode: quiz.quizcode,
+      instellingen,
       view_token: quiz.view_token,
       // Alleen de organisator krijgt het admin-token terug.
       ...(role === 'admin' ? { admin_token: quiz.admin_token } : {})
@@ -31,8 +33,14 @@ export default defineEventHandler(async (event) => {
     spelers: spelers.data ?? [],
     teams: teams.data ?? [],
     rondes: rondes.data ?? [],
-    // Kijkers zien de vraagteksten niet: alleen de organisator leest ze voor.
-    vragen: role === 'admin' ? alleVragen : alleVragen.map(v => ({ ...v, tekst: '' })),
+    // Kijkers zien de vraagteksten alleen als de organisator dat aanzet, en dan
+    // alleen van lopende rondes (afgeronde en toekomstige blijven verborgen).
+    vragen: role === 'admin'
+      ? alleVragen
+      : alleVragen.map((v) => {
+          const open = (rondes.data ?? []).find(r => r.id === v.round_id)?.status === 'open'
+          return instellingen.toonVragen && open ? v : { ...v, tekst: '' }
+        }),
     scores: scores.data ?? [],
     stand: berekenStand(teams.data ?? [], rondes.data ?? [], alleVragen, scores.data ?? [])
   }

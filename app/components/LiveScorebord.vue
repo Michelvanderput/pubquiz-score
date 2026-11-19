@@ -16,6 +16,9 @@ const afgerondeRondes = computed(() => props.quiz.rondes.filter(r => r.status ==
 const lopendeRonde = computed(() => props.quiz.rondes.find(r => r.status === 'open'
   && props.quiz.vragen.some(v => v.round_id === r.id)))
 
+const zichtbareVragen = computed(() => props.quiz.vragen.filter(v =>
+  v.round_id === lopendeRonde.value?.id && v.tekst))
+
 const medaille = (plek: number) => ['🥇', '🥈', '🥉'][plek - 1] ?? ''
 </script>
 
@@ -73,6 +76,23 @@ const medaille = (plek: number) => ['🥇', '🥈', '🥉'][plek - 1] ?? ''
     >
       Ronde {{ lopendeRonde.nummer }} loopt: het totaal verspringt zodra de ronde is afgerond.
     </p>
+
+    <section
+      v-if="quiz.quiz.instellingen.toonVragen && lopendeRonde && zichtbareVragen.length"
+      class="mt-6 rounded-2xl border border-white/10 bg-white/5 p-4"
+    >
+      <h2 class="text-xl">
+        Ronde {{ lopendeRonde.nummer }}
+      </h2>
+      <ol class="mt-2 list-decimal space-y-1 pl-5">
+        <li
+          v-for="vraag in zichtbareVragen"
+          :key="vraag.id"
+        >
+          {{ vraag.tekst }}
+        </li>
+      </ol>
+    </section>
 
     <!-- Punten per ronde -->
     <div

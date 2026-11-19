@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { STANDAARD_RONDES } from '#shared/utils/quiz'
+import { STANDAARD_INSTELLINGEN, STANDAARD_RONDES } from '#shared/utils/quiz'
 
 const naam = ref('')
 const aantalRondes = ref(STANDAARD_RONDES)
 const quizcode = ref(String(Math.floor(1000 + Math.random() * 9000)))
+const instellingen = reactive({ ...STANDAARD_INSTELLINGEN })
 const bezig = ref(false)
 const fout = ref('')
 
@@ -13,7 +14,7 @@ async function maakQuiz() {
   try {
     const r = await $fetch<{ id: string, adminToken: string }>('/api/quizzes', {
       method: 'POST',
-      body: { naam: naam.value, aantalRondes: aantalRondes.value, quizcode: quizcode.value }
+      body: { naam: naam.value, aantalRondes: aantalRondes.value, quizcode: quizcode.value, ...instellingen }
     })
     await navigateTo(`/beheer/${r.id}?token=${r.adminToken}`)
   } catch (e) {
@@ -86,6 +87,7 @@ async function naarScorebord() {
           />
         </UFormField>
       </div>
+      <QuizOpties v-model="instellingen" />
       <UAlert
         v-if="fout"
         color="error"

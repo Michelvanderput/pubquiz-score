@@ -15,11 +15,19 @@ const token = z.string().optional()
 const naam = (label: string, max = 40) =>
   z.string(`${label} is verplicht`).trim().min(1, `${label} is verplicht`).max(max, `${label} is te lang (max. ${max} tekens)`)
 
+const instellingenVelden = {
+  meerdereTeamsPerVraag: z.boolean().optional(),
+  toonVragen: z.boolean().optional(),
+  tussenstandNaRonde: z.boolean().optional()
+}
 export const maakQuizBody = z.object({
   naam: naam('Naam van de quiz', 80),
   aantalRondes: z.coerce.number('Ongeldig aantal rondes').int('Ongeldig aantal rondes').min(1, 'Minimaal 1 ronde').max(20, 'Maximaal 20 rondes'),
-  quizcode: z.string('De quizcode moet precies 4 cijfers zijn').trim().regex(/^\d{4}$/, 'De quizcode moet precies 4 cijfers zijn')
+  quizcode: z.string('De quizcode moet precies 4 cijfers zijn').trim().regex(/^\d{4}$/, 'De quizcode moet precies 4 cijfers zijn'),
+  ...instellingenVelden
 })
+
+export const wijzigInstellingenBody = z.object({ token, ...instellingenVelden })
 
 export const spelerBody = z.object({ token, naam: naam('Spelersnaam') })
 

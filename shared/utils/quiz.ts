@@ -1,8 +1,13 @@
-import type { Ronde, Team, TeamStand, Vraag, VraagScore } from '../types/quiz'
+import type { QuizInstellingen, Ronde, Team, TeamStand, Vraag, VraagScore } from '../types/quiz'
 
 export const MIN_TEAMGROOTTE = 3
 export const MAX_TEAMGROOTTE = 4
 export const STANDAARD_RONDES = 6
+export const STANDAARD_INSTELLINGEN: QuizInstellingen = {
+  meerdereTeamsPerVraag: true,
+  toonVragen: false,
+  tussenstandNaRonde: true
+}
 
 export function isGeldigeTeamgrootte(aantal: number): boolean {
   return Number.isInteger(aantal) && aantal >= MIN_TEAMGROOTTE && aantal <= MAX_TEAMGROOTTE

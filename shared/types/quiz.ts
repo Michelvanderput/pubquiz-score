@@ -45,6 +45,15 @@ export interface TeamStand {
   plek: number
 }
 
+export interface QuizInstellingen {
+  /** Meerdere teams kunnen dezelfde vraag goed hebben (anders: één team per vraag). */
+  meerdereTeamsPerVraag: boolean
+  /** Kijkers zien de vragen van de lopende ronde op het scorebord. */
+  toonVragen: boolean
+  /** Na het afronden van een ronde eerst de tussenstand tonen. */
+  tussenstandNaRonde: boolean
+}
+
 export interface QuizResponse {
   role: 'admin' | 'viewer'
   quiz: {
@@ -52,6 +61,7 @@ export interface QuizResponse {
     naam: string
     aantal_rondes: number
     quizcode: string | null
+    instellingen: QuizInstellingen
     admin_token?: string
     view_token: string
   }

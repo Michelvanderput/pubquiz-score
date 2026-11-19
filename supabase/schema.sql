@@ -11,6 +11,10 @@ create table if not exists quizzes (
   view_token text not null unique,
   -- 4-cijferige code waarmee gasten zonder link naar het scorebord kunnen.
   quizcode text unique check (quizcode ~ '^[0-9]{4}$'),
+  -- Instellingen van de organisator (zie ook migration_instellingen.sql).
+  meerdere_teams_per_vraag boolean not null default true,
+  toon_vragen boolean not null default false,
+  tussenstand_na_ronde boolean not null default true,
   created_at timestamptz not null default now()
 );
 

@@ -1,3 +1,4 @@
+import { STANDAARD_INSTELLINGEN } from '#shared/utils/quiz'
 import { generateToken } from '../../utils/tokens'
 
 // Is de gekozen code bezet, dan nemen we automatisch de volgende vrije.
@@ -6,7 +7,7 @@ function volgendeCode(basis: number, poging: number): string {
 }
 
 export default defineEventHandler(async (event) => {
-  const { naam, aantalRondes, quizcode: gekozenCode } = await leesBody(event, maakQuizBody)
+  const { naam, aantalRondes, quizcode: gekozenCode, meerdereTeamsPerVraag, toonVragen, tussenstandNaRonde } = await leesBody(event, maakQuizBody)
   const supabase = useSupabaseAdmin()
 
   let quiz: { id: string } | null = null
@@ -21,7 +22,16 @@ export default defineEventHandler(async (event) => {
     quizcode = volgendeCode(Number(gekozenCode), poging)
     const { data, error } = await supabase
       .from('quizzes')
-      .insert({ naam, aantal_rondes: aantalRondes, admin_token: adminToken, view_token: viewToken, quizcode })
+      .insert({
+        naam,
+        aantal_rondes: aantalRondes,
+        admin_token: adminToken,
+        view_token: viewToken,
+        quizcode,
+        meerdere_teams_per_vraag: meerdereTeamsPerVraag ?? STANDAARD_INSTELLINGEN.meerdereTeamsPerVraag,
+        toon_vragen: toonVragen ?? STANDAARD_INSTELLINGEN.toonVragen,
+        tussenstand_na_ronde: tussenstandNaRonde ?? STANDAARD_INSTELLINGEN.tussenstandNaRonde
+      })
       .select('id')
       .single()
     if (!error && data) {
