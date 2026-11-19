@@ -102,6 +102,8 @@ async function zetRondeStatus(r: Ronde, status: 'open' | 'afgerond') {
   if (status === 'afgerond') {
     const volgende = data.value?.rondes.find(x => x.status === 'open')
     if (volgende) gekozenRondeId.value = volgende.id
+    // Eerst de tussenstand tonen; de volgende ronde staat klaar onder het tabblad Punten.
+    tab.value = 'stand'
   }
 }
 </script>
