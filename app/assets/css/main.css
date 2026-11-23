@@ -3,15 +3,48 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
 
-:root {
+/* Huisstijl: donkergroen 112317, groen 194923, beige D0C7B9, goud A38253, oranje FF5524. */
+@theme static {
+  --color-fond: #112317;
+  --color-vlak: #194923;
+  --color-beige: #d0c7b9;
+  --color-goud: #a38253;
+  --color-oranje: #ff5524;
+
+  /* Merkkleur voor Nuxt UI (primary): oranje, 500 = FF5524. */
+  --color-brand-50: #fff1ec;
+  --color-brand-100: #ffe0d6;
+  --color-brand-200: #ffc3ad;
+  --color-brand-300: #ff9c7a;
+  --color-brand-400: #ff7a4d;
+  --color-brand-500: #ff5524;
+  --color-brand-600: #e63e10;
+  --color-brand-700: #bf2f0a;
+  --color-brand-800: #992710;
+  --color-brand-900: #7a2412;
+  --color-brand-950: #430f06;
+
+  /* Neutraal voor Nuxt UI: van beige (200) naar donkergroen (950), 800 = groen 194923. */
+  --color-forest-50: #f4f1ec;
+  --color-forest-100: #e8e3da;
+  --color-forest-200: #d0c7b9;
+  --color-forest-300: #b0ab9f;
+  --color-forest-400: #8a988c;
+  --color-forest-500: #627a67;
+  --color-forest-600: #44624a;
+  --color-forest-700: #2c5733;
+  --color-forest-800: #194923;
+  --color-forest-900: #153a1d;
+  --color-forest-950: #112317;
+
   --font-heading: "Anton", Impact, sans-serif;
   --font-body: "Figtree Variable", "Figtree", system-ui, sans-serif;
 }
 
 body {
   font-family: var(--font-body);
-  background: #14110d;
-  color: #f4ecdd;
+  background: var(--color-fond);
+  color: var(--color-beige);
 }
 
 h1, h2, h3 {

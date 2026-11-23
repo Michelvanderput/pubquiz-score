@@ -11,7 +11,7 @@ useSeoMeta({ title: () => data.value ? `${data.value.quiz.naam} – scorebord` :
   <main class="mx-auto max-w-6xl px-4 py-6">
     <header class="mb-5 flex flex-wrap items-end justify-between gap-2">
       <div>
-        <p class="text-xs uppercase tracking-[.2em] text-white/50">
+        <p class="text-xs uppercase tracking-[.2em] text-beige/50">
           Live scorebord
         </p>
         <h1 class="text-3xl sm:text-5xl">
@@ -42,7 +42,7 @@ useSeoMeta({ title: () => data.value ? `${data.value.quiz.naam} – scorebord` :
     />
     <p
       v-else-if="!fout"
-      class="text-white/60"
+      class="text-beige/60"
     >
       Laden…
     </p>

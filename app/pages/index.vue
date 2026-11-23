@@ -40,14 +40,14 @@ async function naarScorebord() {
 <template>
   <main class="mx-auto max-w-xl px-4 py-10">
     <h1 class="text-5xl sm:text-6xl">
-      Pubquiz<span class="text-amber-400">.</span>
+      Pubquiz<span class="text-oranje">.</span>
     </h1>
-    <p class="mt-2 text-white/60">
+    <p class="mt-2 text-beige/60">
       Maak teams, voer de vragen in en geef punten. Iedereen volgt het live scorebord.
     </p>
 
     <form
-      class="mt-8 space-y-4 rounded-2xl border border-white/10 bg-white/5 p-5"
+      class="mt-8 space-y-4 rounded-2xl border border-beige/15 bg-vlak/60 p-5"
       @submit.prevent="maakQuiz"
     >
       <h2 class="text-2xl">
@@ -105,7 +105,7 @@ async function naarScorebord() {
     </form>
 
     <form
-      class="mt-6 rounded-2xl border border-white/10 p-5"
+      class="mt-6 rounded-2xl border border-beige/15 p-5"
       @submit.prevent="naarScorebord"
     >
       <h2 class="text-xl">

@@ -27,19 +27,19 @@ const opties = [
 
 <template>
   <fieldset class="space-y-3">
-    <legend class="mb-1 text-sm font-semibold text-white/80">
+    <legend class="mb-1 text-sm font-semibold text-beige/80">
       Opties
     </legend>
     <div
       v-for="optie in opties"
       :key="optie.key"
-      class="flex items-start justify-between gap-3 rounded-xl border border-white/10 bg-white/5 p-3"
+      class="flex items-start justify-between gap-3 rounded-xl border border-beige/15 bg-vlak/60 p-3"
     >
       <div>
         <p class="font-medium">
           {{ optie.label }}
         </p>
-        <p class="text-sm text-white/60">
+        <p class="text-sm text-beige/60">
           {{ model[optie.key] ? optie.aan : optie.uit }}
         </p>
       </div>

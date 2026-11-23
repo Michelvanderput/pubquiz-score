@@ -118,7 +118,7 @@ async function zetRondeStatus(r: Ronde, status: 'open' | 'afgerond') {
   <main class="mx-auto max-w-3xl px-4 pb-24 pt-5">
     <header class="flex flex-wrap items-start justify-between gap-3">
       <div>
-        <p class="text-xs uppercase tracking-[.2em] text-white/50">
+        <p class="text-xs uppercase tracking-[.2em] text-beige/50">
           Organisator
         </p>
         <h1 class="text-3xl">
@@ -129,10 +129,10 @@ async function zetRondeStatus(r: Ronde, status: 'open' | 'afgerond') {
         v-if="data"
         class="text-right text-sm"
       >
-        <p class="text-white/60">
+        <p class="text-beige/60">
           Quizcode
         </p>
-        <p class="cijfer text-3xl tracking-widest text-amber-300">
+        <p class="cijfer text-3xl tracking-widest text-oranje">
           {{ data.quiz.quizcode }}
         </p>
       </div>
@@ -173,14 +173,14 @@ async function zetRondeStatus(r: Ronde, status: 'open' | 'afgerond') {
 
     <p
       v-if="!data && !fout"
-      class="mt-6 text-white/60"
+      class="mt-6 text-beige/60"
     >
       Laden…
     </p>
 
     <template v-if="data">
       <nav
-        class="sticky top-0 z-10 -mx-4 mt-4 grid grid-cols-4 gap-1 bg-[#14110d]/95 px-4 py-2 backdrop-blur"
+        class="sticky top-0 z-10 -mx-4 mt-4 grid grid-cols-4 gap-1 bg-fond/95 px-4 py-2 backdrop-blur"
         aria-label="Onderdelen"
       >
         <UButton
@@ -200,7 +200,7 @@ async function zetRondeStatus(r: Ronde, status: 'open' | 'afgerond') {
         v-show="tab === 'teams'"
         class="mt-4 space-y-6"
       >
-        <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
+        <div class="rounded-2xl border border-beige/15 bg-vlak/60 p-4">
           <h2 class="text-xl">
             1. Spelers
           </h2>
@@ -225,17 +225,17 @@ async function zetRondeStatus(r: Ronde, status: 'open' | 'afgerond') {
           </form>
           <p
             v-if="!data.spelers.length"
-            class="mt-3 text-sm text-white/50"
+            class="mt-3 text-sm text-beige/50"
           >
             Voeg eerst alle spelers toe; daarna selecteer je wie samen een team vormt.
           </p>
         </div>
 
-        <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
+        <div class="rounded-2xl border border-beige/15 bg-vlak/60 p-4">
           <h2 class="text-xl">
             2. Team maken
           </h2>
-          <p class="mt-1 text-sm text-white/60">
+          <p class="mt-1 text-sm text-beige/60">
             Kies {{ MIN_TEAMGROOTTE }} of {{ MAX_TEAMGROOTTE }} spelers die nog geen team hebben.
           </p>
           <ul
@@ -251,8 +251,8 @@ async function zetRondeStatus(r: Ronde, status: 'open' | 'afgerond') {
                 type="button"
                 class="rounded-full border px-3 py-1.5 text-sm transition"
                 :class="gekozen.includes(s.id)
-                  ? 'border-amber-400 bg-amber-400 font-semibold text-black'
-                  : 'border-white/20 bg-white/5 hover:bg-white/10'"
+                  ? 'border-oranje bg-oranje font-semibold text-fond'
+                  : 'border-beige/30 bg-vlak/60 hover:bg-vlak'"
                 :aria-pressed="gekozen.includes(s.id)"
                 @click="wisselSpeler(s.id)"
               >
@@ -260,7 +260,7 @@ async function zetRondeStatus(r: Ronde, status: 'open' | 'afgerond') {
               </button>
               <button
                 type="button"
-                class="ml-1 px-1 text-white/40 hover:text-red-400"
+                class="ml-1 px-1 text-beige/40 hover:text-red-400"
                 :aria-label="`Verwijder ${s.naam}`"
                 @click="verwijderSpeler(s.id)"
               >
@@ -270,7 +270,7 @@ async function zetRondeStatus(r: Ronde, status: 'open' | 'afgerond') {
           </ul>
           <p
             v-else
-            class="mt-3 text-sm text-white/50"
+            class="mt-3 text-sm text-beige/50"
           >
             Geen vrije spelers. Voeg spelers toe bij stap 1.
           </p>
@@ -304,13 +304,13 @@ async function zetRondeStatus(r: Ronde, status: 'open' | 'afgerond') {
             <li
               v-for="team in data.teams"
               :key="team.id"
-              class="flex items-start justify-between gap-3 rounded-xl border border-white/10 bg-white/5 p-3"
+              class="flex items-start justify-between gap-3 rounded-xl border border-beige/15 bg-vlak/60 p-3"
             >
               <div>
                 <p class="font-semibold">
                   {{ team.naam }}
                 </p>
-                <p class="text-sm text-white/60">
+                <p class="text-sm text-beige/60">
                   {{ spelersVan(team.id).map(s => s.naam).join(', ') }}
                 </p>
               </div>
@@ -334,7 +334,7 @@ async function zetRondeStatus(r: Ronde, status: 'open' | 'afgerond') {
       >
         <p
           v-if="!data.teams.length"
-          class="rounded-xl bg-white/5 p-4 text-sm text-white/70"
+          class="rounded-xl bg-vlak/60 p-4 text-sm text-beige/70"
         >
           Maak eerst teams aan bij het tabblad Teams.
         </p>
@@ -345,7 +345,7 @@ async function zetRondeStatus(r: Ronde, status: 'open' | 'afgerond') {
             :key="r.id"
             type="button"
             class="shrink-0 rounded-lg px-3 py-1.5 text-sm font-semibold transition"
-            :class="r.id === ronde?.id ? 'bg-amber-400 text-black' : 'bg-white/10 hover:bg-white/15'"
+            :class="r.id === ronde?.id ? 'bg-oranje text-fond' : 'bg-vlak hover:bg-vlak'"
             @click="gekozenRondeId = r.id"
           >
             R{{ r.nummer }}<span v-if="r.status === 'afgerond'"> ✓</span>
@@ -360,7 +360,7 @@ async function zetRondeStatus(r: Ronde, status: 'open' | 'afgerond') {
             <UButton
               v-if="ronde.status === 'open'"
               icon="i-lucide-flag"
-              color="success"
+
               :loading="bezig"
               @click="zetRondeStatus(ronde, 'afgerond')"
             >
@@ -378,7 +378,7 @@ async function zetRondeStatus(r: Ronde, status: 'open' | 'afgerond') {
           </div>
           <p
             v-if="ronde.status === 'afgerond'"
-            class="text-sm text-emerald-300"
+            class="text-sm text-beige"
           >
             Afgerond: de punten tellen mee in het scorebord. Je kunt nog corrigeren.
           </p>
@@ -387,16 +387,16 @@ async function zetRondeStatus(r: Ronde, status: 'open' | 'afgerond') {
             <li
               v-for="(vraag, i) in vragenVanRonde"
               :key="vraag.id"
-              class="rounded-2xl border border-white/10 bg-white/5 p-3"
+              class="rounded-2xl border border-beige/15 bg-vlak/60 p-3"
             >
               <div class="flex items-start justify-between gap-2">
                 <p class="font-medium">
-                  <span class="text-white/50">{{ i + 1 }}.</span> {{ vraag.tekst }}
+                  <span class="text-beige/50">{{ i + 1 }}.</span> {{ vraag.tekst }}
                 </p>
                 <div class="flex shrink-0 items-center gap-1 text-sm">
                   <button
                     type="button"
-                    class="size-7 rounded bg-white/10"
+                    class="size-7 rounded bg-vlak"
                     aria-label="Minder punten"
                     @click="wijzigPunten(vraag, -0.5)"
                   >
@@ -405,7 +405,7 @@ async function zetRondeStatus(r: Ronde, status: 'open' | 'afgerond') {
                   <span class="min-w-10 text-center">{{ formatPunten(vraag.punten) }} pt</span>
                   <button
                     type="button"
-                    class="size-7 rounded bg-white/10"
+                    class="size-7 rounded bg-vlak"
                     aria-label="Meer punten"
                     @click="wijzigPunten(vraag, 0.5)"
                   >
@@ -428,8 +428,8 @@ async function zetRondeStatus(r: Ronde, status: 'open' | 'afgerond') {
                   type="button"
                   class="min-h-11 rounded-xl border px-3 text-sm font-semibold transition active:scale-95"
                   :class="heeftScore(vraag.id, team.id)
-                    ? 'border-emerald-400 bg-emerald-400 text-black'
-                    : 'border-white/20 bg-white/5 hover:bg-white/10'"
+                    ? 'border-goud bg-goud text-fond'
+                    : 'border-beige/30 bg-vlak/60 hover:bg-vlak'"
                   :aria-pressed="heeftScore(vraag.id, team.id)"
                   @click="zetScore(vraag.id, team.id, !heeftScore(vraag.id, team.id))"
                 >
@@ -440,13 +440,13 @@ async function zetRondeStatus(r: Ronde, status: 'open' | 'afgerond') {
           </ul>
           <p
             v-if="!vragenVanRonde.length"
-            class="text-sm text-white/50"
+            class="text-sm text-beige/50"
           >
             Nog geen vragen in deze ronde.
           </p>
 
           <form
-            class="flex flex-wrap gap-2 rounded-2xl border border-dashed border-white/20 p-3"
+            class="flex flex-wrap gap-2 rounded-2xl border border-dashed border-beige/30 p-3"
             @submit.prevent="voegVraagToe"
           >
             <UInput
