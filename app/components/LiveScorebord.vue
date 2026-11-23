@@ -26,7 +26,7 @@ const medaille = (plek: number) => ['🥇', '🥈', '🥉'][plek - 1] ?? ''
   <div>
     <p
       v-if="!quiz.stand.length"
-      class="rounded-xl bg-white/5 p-6 text-center text-white/60"
+      class="rounded-xl bg-vlak/60 p-6 text-center text-beige/60"
     >
       Nog geen teams. Zodra de organisator teams aanmaakt, verschijnen ze hier.
     </p>
@@ -40,22 +40,22 @@ const medaille = (plek: number) => ['🥇', '🥈', '🥉'][plek - 1] ?? ''
       <li
         v-for="team in quiz.stand"
         :key="team.teamId"
-        class="flex flex-col rounded-2xl border border-white/10 bg-white/5 p-4"
-        :class="team.plek === 1 && team.totaal > 0 ? 'border-amber-400/70 bg-amber-400/10' : ''"
+        class="flex flex-col rounded-2xl border border-beige/15 bg-vlak/60 p-4"
+        :class="team.plek === 1 && team.totaal > 0 ? 'border-oranje bg-oranje/10' : ''"
       >
-        <div class="flex items-center justify-between text-sm text-white/60">
+        <div class="flex items-center justify-between text-sm text-beige/60">
           <span>#{{ team.plek }}</span>
           <span>{{ medaille(team.plek) }}</span>
         </div>
         <h3 class="mt-1 break-words text-xl leading-tight">
           {{ team.naam }}
         </h3>
-        <p class="cijfer mt-3 text-6xl leading-none text-amber-300">
+        <p class="cijfer mt-3 text-6xl leading-none text-oranje">
           {{ formatPunten(team.totaal) }}
         </p>
         <p
           class="mt-1 min-h-5 text-sm"
-          :class="team.live ? 'text-emerald-300' : 'text-transparent'"
+          :class="team.live ? 'text-beige' : 'text-transparent'"
         >
           <template v-if="team.live">
             +{{ formatPunten(team.live) }} live
@@ -64,7 +64,7 @@ const medaille = (plek: number) => ['🥇', '🥈', '🥉'][plek - 1] ?? ''
             –
           </template>
         </p>
-        <p class="mt-2 text-xs text-white/50">
+        <p class="mt-2 text-xs text-beige/50">
           {{ (spelersPerTeam.get(team.teamId) ?? []).join(', ') }}
         </p>
       </li>
@@ -72,14 +72,14 @@ const medaille = (plek: number) => ['🥇', '🥈', '🥉'][plek - 1] ?? ''
 
     <p
       v-if="quiz.stand.length && lopendeRonde"
-      class="mt-3 text-center text-sm text-white/60"
+      class="mt-3 text-center text-sm text-beige/60"
     >
       Ronde {{ lopendeRonde.nummer }} loopt: het totaal verspringt zodra de ronde is afgerond.
     </p>
 
     <section
       v-if="quiz.quiz.instellingen.toonVragen && lopendeRonde && zichtbareVragen.length"
-      class="mt-6 rounded-2xl border border-white/10 bg-white/5 p-4"
+      class="mt-6 rounded-2xl border border-beige/15 bg-vlak/60 p-4"
     >
       <h2 class="text-xl">
         Ronde {{ lopendeRonde.nummer }}
@@ -97,10 +97,10 @@ const medaille = (plek: number) => ['🥇', '🥈', '🥉'][plek - 1] ?? ''
     <!-- Punten per ronde -->
     <div
       v-if="quiz.stand.length && afgerondeRondes.length"
-      class="mt-6 overflow-x-auto rounded-xl border border-white/10"
+      class="mt-6 overflow-x-auto rounded-xl border border-beige/15"
     >
       <table class="w-full text-left text-sm">
-        <thead class="bg-white/5 text-xs uppercase tracking-wider text-white/60">
+        <thead class="bg-vlak/60 text-xs uppercase tracking-wider text-beige/60">
           <tr>
             <th class="px-3 py-2">
               Team
@@ -121,7 +121,7 @@ const medaille = (plek: number) => ['🥇', '🥈', '🥉'][plek - 1] ?? ''
           <tr
             v-for="team in quiz.stand"
             :key="team.teamId"
-            class="border-t border-white/10"
+            class="border-t border-beige/15"
           >
             <td class="px-3 py-2 font-medium">
               {{ team.naam }}
@@ -133,7 +133,7 @@ const medaille = (plek: number) => ['🥇', '🥈', '🥉'][plek - 1] ?? ''
             >
               {{ formatPunten(team.perRonde[ronde.id] ?? 0) }}
             </td>
-            <td class="px-3 py-2 text-right font-bold text-amber-300">
+            <td class="px-3 py-2 text-right font-bold text-oranje">
               {{ formatPunten(team.totaal) }}
             </td>
           </tr>
